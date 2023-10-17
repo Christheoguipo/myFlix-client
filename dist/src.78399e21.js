@@ -29872,6 +29872,171 @@ var MovieView = exports.MovieView = function MovieView(_ref) {
     onClick: onBackClick
   }, "Back"));
 };
+},{"react":"../node_modules/react/index.js"}],"components/login-view/login-view.jsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.LoginView = void 0;
+var _react = _interopRequireWildcard(require("react"));
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+var LoginView = exports.LoginView = function LoginView(_ref) {
+  var onLoggedIn = _ref.onLoggedIn;
+  var _useState = (0, _react.useState)(""),
+    _useState2 = _slicedToArray(_useState, 2),
+    username = _useState2[0],
+    setUsername = _useState2[1];
+  var _useState3 = (0, _react.useState)(""),
+    _useState4 = _slicedToArray(_useState3, 2),
+    password = _useState4[0],
+    setPassword = _useState4[1];
+  var handleSubmit = function handleSubmit(event) {
+    event.preventDefault();
+    var data = {
+      Username: username,
+      Password: password
+    };
+    fetch("https://retro-movie-vault-5ccf6999c998.herokuapp.com/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    }).then(function (response) {
+      return response.json();
+    }).then(function (data) {
+      console.log("Login respone: ", data);
+      if (data.user) {
+        localStorage.setItem("user", JSON.stringify(data.user));
+        localStorage.setItem("token", JSON.stringify(data.token));
+        onLoggedIn(data.user, data.token);
+      } else {
+        alert("No such user.");
+      }
+    }).catch(function (e) {
+      alert("Something went wrong.");
+    });
+  };
+  return /*#__PURE__*/_react.default.createElement("form", {
+    onSubmit: handleSubmit
+  }, /*#__PURE__*/_react.default.createElement("label", null, "Username:", /*#__PURE__*/_react.default.createElement("input", {
+    type: "text",
+    value: username,
+    onChange: function onChange(e) {
+      setUsername(e.target.value);
+    },
+    minLength: "4",
+    required: true
+  })), /*#__PURE__*/_react.default.createElement("label", null, "Password:", /*#__PURE__*/_react.default.createElement("input", {
+    type: "password",
+    value: password,
+    onChange: function onChange(e) {
+      setPassword(e.target.value);
+    },
+    required: true
+  })), /*#__PURE__*/_react.default.createElement("button", {
+    type: "submit"
+  }, "Submit"));
+};
+},{"react":"../node_modules/react/index.js"}],"components/signup-view/signup-view.jsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.SignupView = void 0;
+var _react = _interopRequireWildcard(require("react"));
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+var SignupView = exports.SignupView = function SignupView() {
+  var _useState = (0, _react.useState)(""),
+    _useState2 = _slicedToArray(_useState, 2),
+    username = _useState2[0],
+    setUsername = _useState2[1];
+  var _useState3 = (0, _react.useState)(""),
+    _useState4 = _slicedToArray(_useState3, 2),
+    password = _useState4[0],
+    setPassword = _useState4[1];
+  var _useState5 = (0, _react.useState)(""),
+    _useState6 = _slicedToArray(_useState5, 2),
+    email = _useState6[0],
+    setEmail = _useState6[1];
+  var _useState7 = (0, _react.useState)(""),
+    _useState8 = _slicedToArray(_useState7, 2),
+    birthday = _useState8[0],
+    setBirthday = _useState8[1];
+  var handleSubmit = function handleSubmit(event) {
+    event.preventDefault();
+    var data = {
+      Username: username,
+      Email: email,
+      Password: password,
+      Birthday: birthday
+    };
+    fetch("https://retro-movie-vault-5ccf6999c998.herokuapp.com/users", {
+      method: "POST",
+      body: JSON.stringify(data),
+      header: {
+        "Content-Type": "application/json"
+      }
+    }).then(function (response) {
+      if (response.ok) {
+        alert("Signup successful!");
+        window.location.reload();
+      } else {
+        alert("Signup failed.");
+      }
+    });
+  };
+  return /*#__PURE__*/_react.default.createElement("form", {
+    onSubmit: handleSubmit
+  }, /*#__PURE__*/_react.default.createElement("label", null, "Username:", /*#__PURE__*/_react.default.createElement("input", {
+    type: "text",
+    value: username,
+    onChange: function onChange(e) {
+      return setUsername(e.target.value);
+    },
+    required: true,
+    minLength: "3"
+  })), /*#__PURE__*/_react.default.createElement("label", null, "Password:", /*#__PURE__*/_react.default.createElement("input", {
+    type: "password",
+    value: password,
+    onChange: function onChange(e) {
+      return setPassword(e.target.value);
+    },
+    required: true
+  })), /*#__PURE__*/_react.default.createElement("label", null, "Email:", /*#__PURE__*/_react.default.createElement("input", {
+    type: "email",
+    value: email,
+    onChange: function onChange(e) {
+      return setEmail(e.target.value);
+    },
+    required: true
+  })), /*#__PURE__*/_react.default.createElement("label", null, "Birthday:", /*#__PURE__*/_react.default.createElement("input", {
+    type: "date",
+    value: birthday,
+    onChange: function onChange(e) {
+      return setBirthday(e.target.value);
+    },
+    required: true
+  })), /*#__PURE__*/_react.default.createElement("button", {
+    type: "submit"
+  }, "Submit"));
+};
 },{"react":"../node_modules/react/index.js"}],"components/main-view/main-view.jsx":[function(require,module,exports) {
 "use strict";
 
@@ -29882,6 +30047,8 @@ exports.MainView = void 0;
 var _react = _interopRequireWildcard(require("react"));
 var _movieCard = require("../movie-card/movie-card");
 var _movieView = require("../movie-view/movie-view");
+var _loginView = require("../login-view/login-view");
+var _signupView = require("../signup-view/signup-view");
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
@@ -29891,12 +30058,33 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 var MainView = exports.MainView = function MainView() {
+  var storedUser = JSON.parse(localStorage.getItem("user"));
+  var storedToken = localStorage.getItem("token");
   var _useState = (0, _react.useState)([]),
     _useState2 = _slicedToArray(_useState, 2),
     movies = _useState2[0],
     setMovies = _useState2[1];
+  var _useState3 = (0, _react.useState)(null),
+    _useState4 = _slicedToArray(_useState3, 2),
+    selectedMovie = _useState4[0],
+    setSelectedMovie = _useState4[1];
+  var _useState5 = (0, _react.useState)(storedUser ? storedUser : null),
+    _useState6 = _slicedToArray(_useState5, 2),
+    user = _useState6[0],
+    setUser = _useState6[1];
+  var _useState7 = (0, _react.useState)(storedToken ? storedToken : null),
+    _useState8 = _slicedToArray(_useState7, 2),
+    token = _useState8[0],
+    setToken = _useState8[1];
   (0, _react.useEffect)(function () {
-    fetch("https://retro-movie-vault-5ccf6999c998.herokuapp.com/movies").then(function (response) {
+    if (!token) {
+      return;
+    }
+    fetch("https://retro-movie-vault-5ccf6999c998.herokuapp.com/movies", {
+      headers: {
+        Authorization: "Bearer ".concat(token)
+      }
+    }).then(function (response) {
       return response.json();
     }).then(function (data) {
       var moviesFromApi = data.map(function (data) {
@@ -29921,11 +30109,7 @@ var MainView = exports.MainView = function MainView() {
       });
       setMovies(moviesFromApi);
     });
-  }, []);
-  var _useState3 = (0, _react.useState)(null),
-    _useState4 = _slicedToArray(_useState3, 2),
-    selectedMovie = _useState4[0],
-    setSelectedMovie = _useState4[1];
+  }, [token]);
   if (selectedMovie) {
     return /*#__PURE__*/_react.default.createElement(_movieView.MovieView, {
       movie: selectedMovie,
@@ -29933,6 +30117,14 @@ var MainView = exports.MainView = function MainView() {
         setSelectedMovie(null);
       }
     });
+  }
+  if (!user) {
+    return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_loginView.LoginView, {
+      onLoggedIn: function onLoggedIn(user, token) {
+        setUser(user);
+        setToken(token);
+      }
+    }), "or", /*#__PURE__*/_react.default.createElement(_signupView.SignupView, null));
   }
   if (movies.length === 0) {
     return /*#__PURE__*/_react.default.createElement("div", null, "The list is empty!");
@@ -29945,9 +30137,15 @@ var MainView = exports.MainView = function MainView() {
         setSelectedMovie(newSelectedMovie);
       }
     });
-  }));
+  }), /*#__PURE__*/_react.default.createElement("button", {
+    onClick: function onClick() {
+      setUser(null);
+      setToken(null);
+      localStorage.clear();
+    }
+  }, "Logout"));
 };
-},{"react":"../node_modules/react/index.js","../movie-card/movie-card":"components/movie-card/movie-card.jsx","../movie-view/movie-view":"components/movie-view/movie-view.jsx"}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","../movie-card/movie-card":"components/movie-card/movie-card.jsx","../movie-view/movie-view":"components/movie-view/movie-view.jsx","../login-view/login-view":"components/login-view/login-view.jsx","../signup-view/signup-view":"components/signup-view/signup-view.jsx"}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
 var bundleURL = null;
 function getBundleURLCached() {
   if (!bundleURL) {
@@ -30048,7 +30246,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54725" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64745" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
