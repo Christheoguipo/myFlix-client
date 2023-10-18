@@ -29913,7 +29913,7 @@ var LoginView = exports.LoginView = function LoginView(_ref) {
     }).then(function (response) {
       return response.json();
     }).then(function (data) {
-      console.log("Login respone: ", data);
+      console.log("Login response: ", data);
       if (data.user) {
         localStorage.setItem("user", JSON.stringify(data.user));
         localStorage.setItem("token", JSON.stringify(data.token));
@@ -29990,16 +29990,23 @@ var SignupView = exports.SignupView = function SignupView() {
     fetch("https://retro-movie-vault-5ccf6999c998.herokuapp.com/users", {
       method: "POST",
       body: JSON.stringify(data),
-      header: {
+      headers: {
         "Content-Type": "application/json"
       }
     }).then(function (response) {
-      if (response.ok) {
-        alert("Signup successful!");
-        window.location.reload();
-      } else {
-        alert("Signup failed.");
+      if (!response.ok) {
+        throw new Error("HTTP error! Status: ".concat(response.status));
       }
+      return response.json();
+    }).then(function (data) {
+      console.log({
+        data: data
+      });
+      alert("Signup successful!");
+      window.location.reload();
+    }).catch(function (e) {
+      console.log(error);
+      alert("Error occurred during signup.");
     });
   };
   return /*#__PURE__*/_react.default.createElement("form", {
@@ -30246,7 +30253,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52802" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51343" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
