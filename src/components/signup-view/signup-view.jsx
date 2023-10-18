@@ -19,17 +19,25 @@ export const SignupView = () => {
     fetch("https://retro-movie-vault-5ccf6999c998.herokuapp.com/users", {
       method: "POST",
       body: JSON.stringify(data),
-      header: {
+      headers: {
         "Content-Type": "application/json"
       }
     })
       .then((response) => {
-        if (response.ok) {
-          alert("Signup successful!");
-          window.location.reload();
-        } else {
-          alert("Signup failed.");
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
         }
+
+        return response.json();
+      })
+      .then((data) => {
+        console.log({ data });
+        alert("Signup successful!");
+        window.location.reload();
+      })
+      .catch((e) => {
+        console.log(error);
+        alert("Error occurred during signup.");
       });
   };
 
