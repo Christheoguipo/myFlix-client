@@ -1,11 +1,41 @@
 import PropTypes from "prop-types";
 import React from 'react';
+import "./movie-card.scss";
+import { FaHeart, FaRegHeart } from 'react-icons/fa';
 import { Button, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { setUser } from "../../redux/reducers/user";
+import { setUsers } from "../../redux/reducers/users";
 
-export const MovieCard = ({ movie, user, token, onAddToFavorites, onRemoveFromFavorites }) => {
+
+export const MovieCard = ({ movie }) => {
+
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.user);
+  const token = useSelector((state) => state.user.token);
+  const users = useSelector((state) => state.users);
 
   const isFavorite = user ? user.FavoriteMovies.includes(movie._id) : false;
+
+  const AddRemoveToFavorites = (movieId, isAdd) => {
+    const updatedUser = { ...user };
+
+    if (isAdd) {
+      updatedUser.FavoriteMovies = [...updatedUser.FavoriteMovies, movieId];
+    } else {
+      updatedUser.FavoriteMovies = updatedUser.FavoriteMovies.filter((favMovieId) => favMovieId !== movieId);
+    }
+
+    const updatedUsers = [...users];
+    const userIndex = updatedUsers.findIndex((u) => u._id === user._id);
+    updatedUsers[userIndex] = updatedUser;
+
+    localStorage.setItem("user", JSON.stringify(updatedUser));
+    dispatch(setUser(updatedUser));
+    dispatch(setUsers(updatedUsers));
+
+  }
 
   const handleFavoriteClick = (event) => {
     if (isFavorite) {
@@ -27,7 +57,7 @@ export const MovieCard = ({ movie, user, token, onAddToFavorites, onRemoveFromFa
 
           if (data) {
 
-            onRemoveFromFavorites(movie._id);
+            AddRemoveToFavorites(movie._id, false);
           } else {
             alert("No such movie.");
           }
@@ -55,7 +85,7 @@ export const MovieCard = ({ movie, user, token, onAddToFavorites, onRemoveFromFa
 
           if (data) {
 
-            onAddToFavorites(movie._id);
+            AddRemoveToFavorites(movie._id, true);
           } else {
             alert("No such movie.");
           }
@@ -68,20 +98,20 @@ export const MovieCard = ({ movie, user, token, onAddToFavorites, onRemoveFromFa
   }
 
   return (
-    <Card className="h-100">
-      <Card.Img variant="top" src={movie.Imageurl} />
-      <Card.Body>
-        <Card.Title>
-          {movie.Title}
-        </Card.Title>
-        <Card.Text>{movie.Director.Name}</Card.Text>
-        <div className="d-flex justify-content-between">
-          <Link to={`/movies/${encodeURIComponent(movie._id)}`} >
-            <Button variant="link">Open</Button>
+    <Card className="h-100 movie-card">
+      <div className="card-img-wrapper">
+        <Card.Img className="h-100" variant="top" src={movie.Imageurl} />
+        <Button className="favorite-button" onClick={handleFavoriteClick}>
+          {isFavorite ? <FaHeart className="FaHeart" /> : <FaRegHeart className="FaRegHeart" />}
+        </Button>
+      </div>
+      <Card.Body className="d-flex flex-column">
+        <Card.Title>{movie.Title}</Card.Title>
+        <Card.Text>{movie.Genre.Name}</Card.Text>
+        <div className="mt-auto text-center">
+          <Link to={`/movies/${encodeURIComponent(movie._id)}`}>
+            <Button variant="outline-primary">View Details</Button>
           </Link>
-          <Button variant="link" onClick={handleFavoriteClick}>
-            {isFavorite ? "Unfavorite" : "Favorite"}
-          </Button>
         </div>
       </Card.Body>
     </Card>
