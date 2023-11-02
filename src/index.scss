@@ -2,6 +2,16 @@ $color: steelblue;
 
 @import '~bootstrap/scss/bootstrap.scss';
 
+html,
+body {
+  height: 100%;
+}
+
 .my-flix {
   color: $color;
+}
+
+div#root {
+  height: 100%;
+  padding: 0 30px;
 }
