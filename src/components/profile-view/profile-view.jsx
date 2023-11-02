@@ -1,16 +1,22 @@
 import React, { useState } from "react";
 import { useParams } from "react-router";
 import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
 import { MovieCard } from "../movie-card/movie-card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import { useDispatch } from "react-redux";
+import { setUser, setToken } from "../../redux/reducers/user";
+import { setUsers } from "../../redux/reducers/users";
+import Form from "react-bootstrap/Form";
 
-export const ProfileView = ({ users, token, favoriteMovies, onProfileUpdate, onProfileDeregister, onAddToFavorites, onRemoveFromFavorites }) => {
+export const ProfileView = ({ users, token, movies }) => {
+
+  const dispatch = useDispatch();
 
   const { usernameParam } = useParams();
   const user = users.find((user) => user.Username === usernameParam);
 
+  const favoriteMovies = movies.filter((movie) => user.FavoriteMovies.includes(movie._id));
   const formattedDate = new Date(user.Birthday).toISOString().substring(0, 10);
 
   const [username, setUsername] = useState(user.Username);
@@ -48,8 +54,14 @@ export const ProfileView = ({ users, token, favoriteMovies, onProfileUpdate, onP
 
         if (data) {
 
-          onProfileUpdate(data);
+          dispatch(setUser(data));
           localStorage.setItem("user", JSON.stringify(data));
+
+          //update the users after a user has updated
+          const userIndex = users.findIndex((user) => user._id === data._id);
+          const updatedUsers = [...users];
+          updatedUsers[userIndex] = data;
+          dispatch(setUsers(updatedUsers));
 
           alert("User successfully updated!");
 
@@ -89,7 +101,9 @@ export const ProfileView = ({ users, token, favoriteMovies, onProfileUpdate, onP
 
             alert("User successfully deregistered!");
 
-            onProfileDeregister();
+            dispatch(setUser(null));
+            dispatch(setToken(null));
+            localStorage.clear();
           } else {
             alert("No such user.");
           }
@@ -103,59 +117,73 @@ export const ProfileView = ({ users, token, favoriteMovies, onProfileUpdate, onP
 
   return (
     <>
-      <h3>User Detail</h3>
-      <Form onSubmit={handleProfileUpdateSubmit}>
-        <Form.Group controlId="formProfileUsername">
-          <Form.Label>Username</Form.Label>
-          <Form.Control
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-            minLength="3"
-          />
-        </Form.Group>
+      <Row>
+        <Col md={4}>
+          <h3>Account Information</h3>
+          <Form onSubmit={handleProfileUpdateSubmit}>
+            <Form.Group controlId="formProfileUsername">
+              {/* <Form.Label>Username</Form.Label> */}
+              <Form.Control
+                className="mb-2"
+                type="text"
+                placeholder="Username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+                minLength="3"
+              />
+            </Form.Group>
 
-        <Form.Group controlId="formProfilePassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </Form.Group>
+            <Form.Group controlId="formProfilePassword">
+              {/* <Form.Label>Password</Form.Label> */}
+              <Form.Control
+                className="mb-2"
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </Form.Group>
 
-        <Form.Group controlId="formProfileEmail">
-          <Form.Label>Email</Form.Label>
-          <Form.Control
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </Form.Group>
+            <Form.Group controlId="formProfileEmail">
+              {/* <Form.Label>Email</Form.Label> */}
+              <Form.Control
+                className="mb-2"
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </Form.Group>
 
-        <Form.Group controlId="formProfileBirthday">
-          <Form.Label>Birthday</Form.Label>
-          <Form.Control
-            type="date"
-            value={birthday}
-            onChange={(e) => setBirthday(e.target.value)}
-            required
-          />
-        </Form.Group>
-        <div className="d-flex justify-content-between">
+            <Form.Group controlId="formProfileBirthday">
+              {/* <Form.Label>Birthday</Form.Label> */}
+              <Form.Control
+                className="mb-2"
+                type="date"
+                placeholder="Birthday"
+                value={birthday}
+                onChange={(e) => setBirthday(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <div className="d-flex justify-content-between">
 
-          <Button className="mt-2" variant="primary" type="submit">Update Profile</Button>
-          <Button form="formDeregister" className="mt-2" variant="danger" type="submit">Deregister</Button>
-        </div>
+              <Button className="mt-2" variant="primary" type="submit">Update Profile</Button>
+              <Button form="formDeregister" className="mt-2" variant="danger" type="submit">Delete Account</Button>
+            </div>
 
-      </Form>
+          </Form>
 
-      <Form id="formDeregister" onSubmit={handleDeregisterSubmit}>
-      </Form>
+          <Form id="formDeregister" onSubmit={handleDeregisterSubmit}>
+          </Form>
+        </Col>
+      </Row>
+
       <hr />
+
       <h3>Favorite Movies</h3>
       {favoriteMovies.length === 0 ? (
         <div>
@@ -164,10 +192,8 @@ export const ProfileView = ({ users, token, favoriteMovies, onProfileUpdate, onP
       ) : (
         <Row>
           {favoriteMovies.map((movie) => (
-            <Col className="mb-5" key={movie._id} md={4}>
-              <MovieCard movie={movie} user={user} token={token}
-                onAddToFavorites={onAddToFavorites}
-                onRemoveFromFavorites={onRemoveFromFavorites} />
+            <Col className="mb-5" key={movie._id} md={2}>
+              <MovieCard movie={movie} />
             </Col>
           ))}
         </Row>
@@ -175,5 +201,4 @@ export const ProfileView = ({ users, token, favoriteMovies, onProfileUpdate, onP
 
     </>
   );
-
 };
