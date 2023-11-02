@@ -1,0 +1,42 @@
+.movie-card {
+  width: 290px;
+
+  &.h-100 {
+    .card-img-wrapper {
+      height: 300px;
+      width: 100%;
+
+      .favorite-button {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 30px;
+        background-color: transparent;
+        border: none;
+        // transition: color 0.3s;
+        cursor: pointer;
+        padding: 0;
+        line-height: 0;
+
+        .FaHeart {
+          color: rgba(255, 0, 0, 0.597);
+          transition: color 0.3s;
+
+          &:hover {
+            font-size: 32px;
+          }
+        }
+
+        .FaRegHeart {
+          color: rgba(255, 0, 0, 0.597);
+          transition: font-size 0.2;
+
+          &:hover {
+            font-size: 32px;
+          }
+        }
+
+      }
+    }
+  }
+}
