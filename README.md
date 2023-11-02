@@ -1,6 +1,6 @@
 
 ## Project description
-- myFlix aka Movie Vault is a single-page, responsive web application designed for movie enthusiasts. It serves as a client-side companion to an existing server-side system, providing an array of interface views and polished interactions. Users can access the myFlix app at their convenience, from any device with internet access. They can explore comprehensive movie information, save their favorite films, and seamlessly access their movie lists.
+- myFlix a.k.a. Movie Vault is a single-page, responsive web application designed for movie enthusiasts. It serves as a client-side companion to an existing server-side system, providing an array of interface views and polished interactions. Users can access the myFlix app at their convenience, from any device with internet access. They can explore comprehensive movie information, save their favorite films, and seamlessly access their movie lists.
 
 ## How to run the app?
 - On your terminal, type in `npm start`.
@@ -21,7 +21,7 @@ You can also access the live app on https://retro-movie-vault.netlify.app/.
 - "react-redux": "^8.1.3",
 - "react-router": "^6.17.0",
 - "react-router-dom": "^6.17.0"
-# devDependencies
+### devDependencies
 - "@parcel/transformer-sass": "^2.9.3",
 - "parcel": "^2.9.3",
 - "process": "^0.11.10"
