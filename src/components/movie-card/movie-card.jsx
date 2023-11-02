@@ -19,6 +19,7 @@ export const MovieCard = ({ movie }) => {
   const isFavorite = user ? user.FavoriteMovies.includes(movie._id) : false;
 
   const AddRemoveToFavorites = (movieId, isAdd) => {
+    // Use spread operator to get a shallow copy of the user
     const updatedUser = { ...user };
 
     if (isAdd) {
