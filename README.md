@@ -9,7 +9,7 @@
 You can also access the live app on https://retro-movie-vault.netlify.app/.
 
 ## Project dependencies 
-# Dependencies:
+### Dependencies:
 - "@reduxjs/toolkit": "^1.9.7",
 - "bootstrap": "^5.3.2",
 - "parcel-bundler": "^1.12.5",
@@ -28,7 +28,7 @@ You can also access the live app on https://retro-movie-vault.netlify.app/.
 
 ## Which API the project uses
 - https://retro-movie-vault-5ccf6999c998.herokuapp.com
-# API Documentation
+### API Documentation
 - https://retro-movie-vault-5ccf6999c998.herokuapp.com/documentation.html
 
 
