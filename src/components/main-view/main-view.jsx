@@ -1,62 +1,38 @@
 import React, { useEffect, useState } from "react";
-import { MovieCard } from "../movie-card/movie-card";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { MovieView } from "../movie-view/movie-view";
 import { LoginView } from "../login-view/login-view";
 import { SignupView } from "../signup-view/signup-view";
 import { NavigationBar } from "../navigation-bar/navigation-bar";
 import { ProfileView } from "../profile-view/profile-view";
+import { MoviesList } from "../movies-list/movies-list";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { setMovies } from "../../redux/reducers/movies";
+import { setUser, setToken } from "../../redux/reducers/user";
+import { setUsers } from "../../redux/reducers/users";
 
 export const MainView = () => {
+
+  const dispatch = useDispatch();
+
   const storedUser = JSON.parse(localStorage.getItem("user"));
   const storedToken = localStorage.getItem("token");
 
-  const [movies, setMovies] = useState([]);
-  const [users, setUsers] = useState([]);
+  const user = useSelector((state) => state.user.user);
+  const token = useSelector((state) => state.user.token);
 
-  const [user, setUser] = useState(storedUser ? storedUser : null);
-  const [token, setToken] = useState(storedToken ? storedToken : null);
-
-  const [favoriteMovies, setFavoriteMovies] = useState(user ? movies.filter((m) => user.FavoriteMovies.includes(m._id)) : []);
-
-  // let favoriteMovies = movies.filter(m => user ? user.FavoriteMovies.includes(m._id) : []);
-
-  const handleOnAddToFavorites = (movieId) => {
-    const updatedUser = user;
-
-    const updatedUsers = users;
-    const userIndex = updatedUsers.findIndex((u) => u._id === user._id);
-
-    updatedUser.FavoriteMovies.push(movieId);
-    updatedUsers[userIndex] = updatedUser;
-
-    setUser(updatedUser);
-    setUsers(updatedUsers);
-
-    if (user) {
-      setFavoriteMovies(movies.filter((m) => user.FavoriteMovies.includes(m._id)));
-    }
+  if (!user && storedUser) {
+    dispatch(setUser(storedUser));
   }
 
-  const handleOnRemoveFromFavorites = (movieId) => {
-    const updatedUser = user;
-
-    const updatedUsers = users;
-    const userIndex = updatedUsers.findIndex((u) => u._id === user._id);
-
-    updatedUser.FavoriteMovies = updatedUser.FavoriteMovies.filter(favMovieId => movieId != favMovieId);
-    updatedUsers[userIndex] = updatedUser;
-
-    setUser(updatedUser);
-    setUsers(updatedUsers);
-
-    if (user) {
-      setFavoriteMovies(movies.filter((m) => user.FavoriteMovies.includes(m._id)));
-    }
-
+  if (!token && storedToken) {
+    dispatch(setToken(storedToken));
   }
+
+  const movies = useSelector((state) => state.movies.list);
+  const users = useSelector((state) => state.users);
 
   useEffect(() => {
     if (!token) {
@@ -97,8 +73,7 @@ export const MainView = () => {
           };
         });
 
-        setMovies(moviesFromApi);
-        setFavoriteMovies(movies.filter(m => user ? user.FavoriteMovies.includes(m._id) : []));
+        dispatch(setMovies(moviesFromApi));
 
       })
       .catch((e) => {
@@ -127,7 +102,7 @@ export const MainView = () => {
             FavoriteMovies: data.FavoriteMovies
           };
         });
-        setUsers(usersFromApi);
+        dispatch(setUsers(usersFromApi));
       })
       .catch((e) => {
         console.log(e);
@@ -138,16 +113,9 @@ export const MainView = () => {
 
   return (
     <BrowserRouter>
-      <NavigationBar
-        user={user}
-        onLoggedOut={() => {
-          setUser(null);
-          setToken(null);
-          localStorage.clear();
-        }}
-      />
+      <NavigationBar />
 
-      <Row className="justify-content-md-center">
+      <Row className="justify-content-md-center h-75">
 
         <Routes>
 
@@ -160,28 +128,11 @@ export const MainView = () => {
                 ) : users.length === 0 ? (
                   <Col>No users found!</Col>
                 ) : (
-                  <Col md={8}>
-                    <ProfileView users={users} token={token}
-
-                      favoriteMovies={favoriteMovies}
-
-                      onProfileUpdate={(user) => {
-                        setUser(user);
-                      }}
-
-                      onProfileDeregister={() => {
-                        setUser(null);
-                        setToken(null);
-                        localStorage.clear();
-                      }}
-
-                      onAddToFavorites={(movieId) => {
-                        handleOnAddToFavorites(movieId);
-                      }}
-
-                      onRemoveFromFavorites={(movieId) => {
-                        handleOnRemoveFromFavorites(movieId);
-                      }}
+                  <Col>
+                    <ProfileView
+                      users={users}
+                      token={token}
+                      movies={movies}
                     />
                   </Col>
                 )}
@@ -196,9 +147,9 @@ export const MainView = () => {
                 {user ? (
                   <Navigate to="/" />
                 ) : (
-                  <Col md={5}>
+                  <>
                     <SignupView />
-                  </Col>
+                  </>
                 )}
               </>
             }
@@ -211,12 +162,9 @@ export const MainView = () => {
                 {user ? (
                   <Navigate to="/" />
                 ) : (
-                  <Col md={5}>
-                    <LoginView onLoggedIn={(user, token) => {
-                      setUser(user);
-                      setToken(token);
-                    }} />
-                  </Col>
+                  <>
+                    <LoginView />
+                  </>
                 )}
               </>
             }
@@ -229,11 +177,11 @@ export const MainView = () => {
                 {!user ? (
                   <Navigate to="/login" replace />
                 ) : movies.length === 0 ? (
-                  <Col>The list it empty!</Col>
+                  <Col>The list is empty!</Col>
                 ) : (
-                  <Col md={8}>
-                    <MovieView movies={movies} />
-                  </Col>
+                  <>
+                    <MovieView />
+                  </>
                 )}
               </>
             }
@@ -245,25 +193,8 @@ export const MainView = () => {
               <>
                 {!user ? (
                   <Navigate to="/login" replace />
-                ) : movies.length === 0 ? (
-                  <Col>The list it empty!</Col>
                 ) : (
-                  <>
-                    {movies.map((movie) => (
-                      <Col className="mb-5" key={movie._id} md={3}>
-                        <MovieCard movie={movie} user={user} token={token}
-
-                          onAddToFavorites={(movieId) => {
-                            handleOnAddToFavorites(movieId);
-                          }}
-
-                          onRemoveFromFavorites={(movieId) => {
-                            handleOnRemoveFromFavorites(movieId);
-                          }}
-                        />
-                      </Col>
-                    ))}
-                  </>
+                  <MoviesList />
                 )}
               </>
             }

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
+import Col from "react-bootstrap/Col";
+import { Link } from "react-router-dom";
 
 export const SignupView = () => {
   const [username, setUsername] = useState("");
@@ -43,50 +45,70 @@ export const SignupView = () => {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <Form.Group controlId="formSignupUsername">
-        <Form.Label>Username:</Form.Label>
-        <Form.Control
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
-          minLength="3"
-        />
-      </Form.Group>
+    <>
+      <Col className="d-flex flex-column justify-content-center align-center" md={3}>
 
-      <Form.Group controlId="formSignupPassword">
-        <Form.Label>Password:</Form.Label>
-        <Form.Control
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-      </Form.Group>
+        <h1 className="align-self-center pb-5">MovieVault</h1>
 
-      <Form.Group controlId="formEmail">
-        <Form.Label>Email:</Form.Label>
-        <Form.Control
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-      </Form.Group>
+        <Form onSubmit={handleSubmit}>
+          <Form.Group controlId="formSignupUsername">
+            {/* <Form.Label>Username:</Form.Label> */}
+            <Form.Control
+              className="mb-3"
+              type="text"
+              placeholder="Username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+              minLength="3"
+            />
+          </Form.Group>
 
-      <Form.Group controlId="formBirthday">
-        <Form.Label>Birthday:</Form.Label>
-        <Form.Control
-          type="date"
-          value={birthday}
-          onChange={(e) => setBirthday(e.target.value)}
-          required
-        />
-      </Form.Group>
+          <Form.Group controlId="formSignupPassword">
+            {/* <Form.Label>Password:</Form.Label> */}
+            <Form.Control
+              className="mb-3"
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </Form.Group>
 
-      <Button className="mt-2" variant="primary" type="submit">Submit</Button>
-    </Form>
+          <Form.Group controlId="formEmail">
+            {/* <Form.Label>Email:</Form.Label> */}
+            <Form.Control
+              className="mb-3"
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </Form.Group>
+
+          <Form.Group controlId="formBirthday">
+            {/* <Form.Label>Birthday:</Form.Label> */}
+            <Form.Control
+              className="mb-3"
+              type="text"
+              placeholder="Birthday (dd/mm/yyyy)"
+              value={birthday}
+              onChange={(e) => setBirthday(e.target.value)}
+              required
+            />
+          </Form.Group>
+
+          <div className="d-flex justify-content-between">
+            <Button className="mt-2" variant="primary" type="submit">Signup</Button>
+            <Link className="align-self-end" to={"/login"}>
+              Already have an account? Click here.
+            </Link>
+          </div>
+        </Form>
+      </Col>
+    </>
   );
 
 }

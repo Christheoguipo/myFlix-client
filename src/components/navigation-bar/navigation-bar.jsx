@@ -1,13 +1,18 @@
 import React from "react";
 import { Navbar, Container, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { setUser, setToken } from "../../redux/reducers/user";
 
-export const NavigationBar = ({ user, onLoggedOut }) => {
+export const NavigationBar = () => {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.user);
+
   return (
     <Navbar bg="light" expand="lg">
-      <Container>
+      <Container fluid>
         <Navbar.Brand as={Link} to="/">
-          Movie Vault App
+          MovieVault
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
@@ -30,7 +35,14 @@ export const NavigationBar = ({ user, onLoggedOut }) => {
                 <Nav.Link as={Link} to={`/users/${user.Username}`}>
                   Profile
                 </Nav.Link>
-                <Nav.Link onClick={onLoggedOut}>
+
+                <Nav.Link
+                  onClick={() => {
+                    dispatch(setUser(null));
+                    dispatch(setToken(null));
+                    localStorage.clear();
+                  }}
+                >
                   Logout
                 </Nav.Link>
               </>
