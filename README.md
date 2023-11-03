@@ -1,6 +1,6 @@
 
 ## Project description
-- myFlix a.k.a. Movie Vault is a single-page, responsive web application designed for movie enthusiasts. It serves as a client-side companion to an existing server-side system, providing an array of interface views and polished interactions. Users can access the myFlix app at their convenience, from any device with internet access. They can explore comprehensive movie information, save their favorite films, and seamlessly access their movie lists.
+myFlix a.k.a. Movie Vault is a single-page, responsive web application designed for movie enthusiasts. It serves as a client-side companion to an existing server-side system, providing an array of interface views and polished interactions. Users can access the myFlix app at their convenience, from any device with internet access. They can explore comprehensive movie information, save their favorite films, and seamlessly access their movie lists.
 
 ## How to run the app?
 - On your terminal, type in `npm start`.
