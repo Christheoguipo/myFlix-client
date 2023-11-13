@@ -92,7 +92,7 @@ export const SignupView = () => {
             {/* <Form.Label>Birthday:</Form.Label> */}
             <Form.Control
               className="mb-3"
-              type="text"
+              type="date"
               placeholder="Birthday (dd/mm/yyyy)"
               value={birthday}
               onChange={(e) => setBirthday(e.target.value)}
