@@ -6,7 +6,6 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { useDispatch } from "react-redux";
 import { setUser, setToken } from "../../redux/reducers/user";
-import { setUsers } from "../../redux/reducers/users";
 import Form from "react-bootstrap/Form";
 
 export const ProfileView = ({ users, token, movies }) => {
@@ -20,9 +19,11 @@ export const ProfileView = ({ users, token, movies }) => {
   const formattedDate = new Date(user.Birthday).toISOString().substring(0, 10);
 
   const [username, setUsername] = useState(user.Username);
-  const [password, setPassword] = useState(user.Password);
+  const [password, setPassword] = useState("");
   const [email, setEmail] = useState(user.Email);
   const [birthday, setBirthday] = useState(formattedDate);
+
+  const [updateUser, setUpdateUser] = useState(user);
 
   const handleProfileUpdateSubmit = (event) => {
     event.preventDefault();
@@ -50,20 +51,24 @@ export const ProfileView = ({ users, token, movies }) => {
         return response.json();
       })
       .then((data) => {
-        console.log("User update response: ", data);
 
         if (data) {
+          console.log("User update response: ", data);
 
-          dispatch(setUser(data));
-          localStorage.setItem("user", JSON.stringify(data));
 
-          //update the users after a user has updated
-          const userIndex = users.findIndex((user) => user._id === data._id);
-          const updatedUsers = [...users];
-          updatedUsers[userIndex] = data;
-          dispatch(setUsers(updatedUsers));
+          localStorage.clear();
+          window.location.reload();
 
-          alert("User successfully updated!");
+          // dispatch(setUser(data));
+          // localStorage.setItem("user", JSON.stringify(data));
+
+          // //update the users after a user has updated
+          // const userIndex = users.findIndex((user) => user._id === data._id);
+          // const updatedUsers = [...users];
+          // updatedUsers[userIndex] = data;
+          // dispatch(setUsers(updatedUsers));
+
+          // alert("User successfully updated!");
 
         } else {
           alert("No such user.");
