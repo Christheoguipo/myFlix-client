@@ -14,7 +14,6 @@ import { setUser, setToken } from "../../redux/reducers/user";
 import { setUsers } from "../../redux/reducers/users";
 
 export const MainView = () => {
-
   const dispatch = useDispatch();
 
   const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -40,10 +39,9 @@ export const MainView = () => {
     }
 
     fetch("https://retro-movie-vault-5ccf6999c998.herokuapp.com/movies", {
-      headers: { Authorization: `Bearer ${token}` }
+      headers: { Authorization: `Bearer ${token}` },
     })
       .then((response) => {
-
         if (!response.ok) {
           console.log(response);
           throw new Error(`HTTP Error: ${response.status}`);
@@ -56,25 +54,24 @@ export const MainView = () => {
           return {
             Genre: {
               Name: data.Genre.Name,
-              Description: data.Genre.Description
+              Description: data.Genre.Description,
             },
             Director: {
               Name: data.Director.Name,
               Bio: data.Director.Bio,
               Birthyear: data.Director.Birthyear,
-              Deathyear: data.Director.Deathyear
+              Deathyear: data.Director.Deathyear,
             },
             Actors: data.Actors,
             _id: data._id,
             Title: data.Title,
             Description: data.Description,
             Imageurl: data.Imageurl,
-            Featured: data.Featured
+            Featured: data.Featured,
           };
         });
 
         dispatch(setMovies(moviesFromApi));
-
       })
       .catch((e) => {
         console.log(e);
@@ -82,7 +79,7 @@ export const MainView = () => {
       });
 
     fetch("https://retro-movie-vault-5ccf6999c998.herokuapp.com/users", {
-      headers: { Authorization: `Bearer ${token}` }
+      headers: { Authorization: `Bearer ${token}` },
     })
       .then((response) => {
         if (!response.ok) {
@@ -99,7 +96,7 @@ export const MainView = () => {
             Password: data.Password,
             Email: data.Email,
             Birthday: data.Birthday,
-            FavoriteMovies: data.FavoriteMovies
+            FavoriteMovies: data.FavoriteMovies,
           };
         });
         dispatch(setUsers(usersFromApi));
@@ -108,32 +105,31 @@ export const MainView = () => {
         console.log(e);
         alert("Error occurred while getting all users.");
       });
-
   }, [token]);
+
+  console.log("MainView", {
+    user,
+    token,
+    movies,
+    users,
+  });
 
   return (
     <BrowserRouter>
       <NavigationBar />
 
       <Row className="justify-content-md-center h-75">
-
         <Routes>
-
+          {/* Profile View */}
           <Route
             path="/users/:usernameParam"
             element={
               <>
-                {!user ? (
-                  <Navigate to="/login" replace />
-                ) : users.length === 0 ? (
-                  <Col>No users found!</Col>
+                {user ? (
+                  <Navigate to="/" />
                 ) : (
                   <Col>
-                    <ProfileView
-                      users={users}
-                      token={token}
-                      movies={movies}
-                    />
+                    <ProfileView users={users} token={token} movies={movies} />
                   </Col>
                 )}
               </>
@@ -190,16 +186,9 @@ export const MainView = () => {
           <Route
             path="/"
             element={
-              <>
-                {!user ? (
-                  <Navigate to="/login" replace />
-                ) : (
-                  <MoviesList />
-                )}
-              </>
+              <>{!user ? <Navigate to="/login" replace /> : <MoviesList />}</>
             }
           />
-
         </Routes>
       </Row>
     </BrowserRouter>
