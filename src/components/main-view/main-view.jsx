@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { MovieView } from "../movie-view/movie-view";
 import { LoginView } from "../login-view/login-view";
@@ -10,28 +10,16 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { useSelector, useDispatch } from "react-redux";
 import { setMovies } from "../../redux/reducers/movies";
-import { setUser, setToken } from "../../redux/reducers/user";
 import { setUsers } from "../../redux/reducers/users";
 
 export const MainView = () => {
   const dispatch = useDispatch();
 
-  const storedUser = JSON.parse(localStorage.getItem("user"));
-  const storedToken = localStorage.getItem("token");
-
   const user = useSelector((state) => state.user.user);
   const token = useSelector((state) => state.user.token);
 
-  if (!user && storedUser) {
-    dispatch(setUser(storedUser));
-  }
-
-  if (!token && storedToken) {
-    dispatch(setToken(storedToken));
-  }
-
   const movies = useSelector((state) => state.movies.list);
-  const users = useSelector((state) => state.users);
+  // const users = useSelector((state) => state.users);
 
   useEffect(() => {
     if (!token) {
@@ -105,31 +93,28 @@ export const MainView = () => {
         console.log(e);
         alert("Error occurred while getting all users.");
       });
-  }, [token]);
 
-  console.log("MainView", {
-    user,
-    token,
-    movies,
-    users,
-  });
+    if (location) {
+      console.log("message", location)
+    }
+  }, [token]);
 
   return (
     <BrowserRouter>
       <NavigationBar />
 
-      <Row className="justify-content-md-center h-75">
+      <Row className="justify-content-center h-75">
         <Routes>
           {/* Profile View */}
           <Route
             path="/users/:usernameParam"
             element={
               <>
-                {user ? (
-                  <Navigate to="/" />
+                {!user ? (
+                  <Navigate to="/login" replace />
                 ) : (
                   <Col>
-                    <ProfileView users={users} token={token} movies={movies} />
+                    <ProfileView user={user} token={token} movies={movies} />
                   </Col>
                 )}
               </>
@@ -173,7 +158,7 @@ export const MainView = () => {
                 {!user ? (
                   <Navigate to="/login" replace />
                 ) : movies.length === 0 ? (
-                  <Col>The list is empty!</Col>
+                  <Col></Col>
                 ) : (
                   <>
                     <MovieView />
@@ -187,6 +172,14 @@ export const MainView = () => {
             path="/"
             element={
               <>{!user ? <Navigate to="/login" replace /> : <MoviesList />}</>
+            }
+          />
+
+          {/* Reroutes the user to the home page for invalid urls */}
+          <Route
+            path="*"
+            element={
+              <>{!user ? <Navigate to="/login" replace /> : <Navigate to="/" replace />}</>
             }
           />
         </Routes>
