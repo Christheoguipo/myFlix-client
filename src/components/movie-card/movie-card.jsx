@@ -8,7 +8,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { setUser } from "../../redux/reducers/user";
 import { setUsers } from "../../redux/reducers/users";
 
-
 export const MovieCard = ({ movie }) => {
 
   const dispatch = useDispatch();
@@ -54,7 +53,6 @@ export const MovieCard = ({ movie }) => {
           return response;
         })
         .then((data) => {
-          console.log("Movie removed from favorites response: ", data);
 
           if (data) {
 
@@ -82,7 +80,6 @@ export const MovieCard = ({ movie }) => {
           return response;
         })
         .then((data) => {
-          console.log("Movie added to favorites response: ", data);
 
           if (data) {
 
@@ -102,17 +99,18 @@ export const MovieCard = ({ movie }) => {
     <Card className="h-100 movie-card">
       <div className="card-img-wrapper">
         <Card.Img className="h-100" variant="top" src={movie.Imageurl} />
-        <Button className="favorite-button" onClick={handleFavoriteClick}>
-          {isFavorite ? <FaHeart className="FaHeart" /> : <FaRegHeart className="FaRegHeart" />}
-        </Button>
+
       </div>
       <Card.Body className="d-flex flex-column">
         <Card.Title>{movie.Title}</Card.Title>
         <Card.Text>{movie.Genre.Name}</Card.Text>
-        <div className="mt-auto text-center">
+        <div className="d-flex mt-auto text-center justify-content-between">
           <Link to={`/movies/${encodeURIComponent(movie._id)}`}>
             <Button variant="outline-primary">View Details</Button>
           </Link>
+          <Button className="favorite-button" onClick={handleFavoriteClick}>
+            {isFavorite ? <FaHeart className="FaHeart" /> : <FaRegHeart className="FaRegHeart" />}
+          </Button>
         </div>
       </Card.Body>
     </Card>
