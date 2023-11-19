@@ -9,12 +9,10 @@ myFlix a.k.a. Movie Vault is a single-page, responsive web application designed 
 You can also access the live app on https://retro-movie-vault.netlify.app/.
 
 ## Project dependencies 
-- reduxjs/toolkit
 - react
 - react-bootstrap
 - react-redux
-- react-router-dom
-- parcel-bundler
+- parcel
 
 ## Which API the project uses
 - https://retro-movie-vault-5ccf6999c998.herokuapp.com
