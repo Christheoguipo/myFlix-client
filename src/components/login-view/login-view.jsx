@@ -1,17 +1,37 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import { useDispatch } from "react-redux";
 import { setUser, setToken } from "../../redux/reducers/user";
-import { Link } from "react-router-dom";
-
+import { Link, useLocation } from "react-router-dom";
+import { Alert } from "react-bootstrap";
 
 export const LoginView = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const dispatch = useDispatch();
+
+  const [alertVariant, setAlertVariant] = useState("success");
+  const [alertShow, setAlertShow] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+
+  const alertProperties = (variant, show, message) => {
+    setAlertVariant(variant);
+    setAlertShow(show);
+    setAlertMessage(message);
+  }
+
+
+  const location = useLocation();
+  useEffect(() => {
+
+    if (location.state && location.state.message) {
+      alertProperties("success", true, location.state.message);
+    }
+  }, [location.state]);
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -30,28 +50,31 @@ export const LoginView = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("Login response: ", data);
         if (data.user) {
           localStorage.setItem("user", JSON.stringify(data.user));
           localStorage.setItem("token", data.token);
           dispatch(setUser(data.user));
           dispatch(setToken(data.token));
         } else {
-          alert("No such user.");
+          alertProperties("danger", true, "No such user.")
         }
       })
       .catch((e) => {
-        alert("Something went wrong.");
+        alertProperties("danger", true, "Something went wrong.")
       });
   };
 
   return (
     <>
-      <Col className="d-flex flex-column justify-content-center align-center" md={3}>
+
+      <Col className="d-flex flex-column justify-content-center align-center" xl={4} lg={5} md={7}>
 
         <h1 className="align-self-center pb-5">MovieVault</h1>
-
+        <Alert variant={alertVariant} show={alertShow} onClose={() => setAlertShow(false)} dismissible>
+          {alertMessage}
+        </Alert>
         <Form onSubmit={handleSubmit}>
+
           <Form.Group controlId="formUsername">
             {/* <Form.Label>Username:</Form.Label> */}
             <Form.Control
