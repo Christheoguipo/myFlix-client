@@ -13,17 +13,16 @@ export const MoviesList = () => {
   return (
     <>
       <Row className="justify-content-center my-4" >
-        <Col md={4}>
+        <Col lg={6} md={8} sm={10}>
           <MoviesFilter />
         </Col>
       </Row>
       <Row>
         {movies.length === 0 ? (
           <Col></Col>
-          // <Col>The list is empty!</Col>
         ) : (
           filteredMovies.map((movie) => (
-            <Col className="mb-4" key={movie._id} md={2}>
+            <Col className="mb-4" key={movie._id} xxl={2} xl={3} lg={4} md={4} sm={6} xs={12} >
               <MovieCard movie={movie} />
             </Col>
           ))
