@@ -16,9 +16,9 @@ export const MovieView = () => {
   const similarMovies = movies.filter((filteredMovie) => filteredMovie.Genre.Name.includes(movie.Genre.Name) && filteredMovie._id !== movie._id);
 
   return (
-    <Col md={9}>
-      <Row>
-        <Col md={6}>
+    <Col className="d-flex flex-column" md={9} sm={10} xs={12}>
+      <Row className="mb-2">
+        <Col className="d-flex flex-column" lg={6}>
           <h1>{movie.Title}</h1>
 
           <div className="d-flex justify-content-between">
@@ -28,15 +28,14 @@ export const MovieView = () => {
             </div>
           </div>
 
-          <p>{movie.Description}</p>
+          <p className="text-justify">{movie.Description}</p>
 
-          <Link to={"/"} >
+          <Link className="mt-auto" to={"/"} >
             <Button variant="outline-primary">Back</Button>
           </Link>
-
         </Col>
-        <Col md={6}>
-          <div className="image-wrapper">
+        <Col lg={6} >
+          <div className="image-wrapper mt-1">
             <img className="image" src={movie.Imageurl} />
           </div>
         </Col>
@@ -50,7 +49,7 @@ export const MovieView = () => {
       ) : (
         <Row>
           {similarMovies.map((movie) => (
-            <Col className="mb-5" key={movie._id} md={3}>
+            <Col className="mb-5" key={movie._id} xxl={3} xl={4} lg={6}  >
               <MovieCard movie={movie} />
             </Col>
           ))}
