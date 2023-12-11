@@ -60,11 +60,11 @@ You can also access the live app on https://retro-movie-vault.netlify.app/.
  
 ## API Used
 
-The myFlix client interacts with the [myFlix API](https://retro-movie-vault-5ccf6999c998.herokuapp.com), which serves as the backend for managing movie data, user authentication, and profiles.
+The myFlix client interacts with the [Retro Movie Vault API](https://retro-movie-vault-5ccf6999c998.herokuapp.com), which serves as the backend for managing movie data, user authentication, and profiles.
 
 ## API Documentation
 
-For details on the API endpoints and usage, refer to the [myFlix API Documentation](https://retro-movie-vault-5ccf6999c998.herokuapp.com).
+For details on the API endpoints and usage, refer to the [Retro Movie Vault API Documentation](https://retro-movie-vault-5ccf6999c998.herokuapp.com).
 
 ### AI Usage Declaration
 
