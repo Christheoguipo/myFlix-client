@@ -6,11 +6,11 @@ The myFlix client is a dynamic web application that allows users to browse a col
 
 ## Features
 
-- **User Authentication:** Create an account or log in to access personalized movie recommendations and favorites.
-- **Browse Movies:** Explore a diverse library of movies, sorted by genre, director, or released year.
-- **Movie Details:** Get detailed information about a specific movie, including its cast, genre, and a brief description.
+- **User Authentication:** Create an account or log in to access the movie list and favorites.
+- **Browse Movies:** Explore classic movies.
+- **Movie Details:** Get detailed information about a specific movie, including its director, genre, and a brief description.
 - **Add to Favorites:** Build and manage your list of favorite movies for quick access.
-- **Update Profile:** Customize your user profile with a unique username, password, and email.
+- **Update Profile:** Customize your user profile.
 
 ## Installation
 
