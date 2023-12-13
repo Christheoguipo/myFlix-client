@@ -12,6 +12,13 @@ The myFlix client is a dynamic web application that allows users to browse a col
 - **Add to Favorites:** Build and manage your list of favorite movies for quick access.
 - **Update Profile:** Customize your user profile.
 
+## Project Dependencies
+
+- React
+- React-Bootstrap
+- Redux
+- Parcel
+
 ## Installation
 
 To run the myFlix client locally, follow these steps:
@@ -43,13 +50,6 @@ To run the myFlix client locally, follow these steps:
 5. The app will be accessible at `http://localhost:1234` in your web browser.
 
 You can also access the live app on https://retro-movie-vault.netlify.app/.
-
-## Project Dependencies
-
-- React
-- React-Bootstrap
-- Redux
-- Parcel
 
 ## API Used
 
