@@ -1,4 +1,4 @@
-# myFlix Client
+# MyFlix Client
 
 ## Project Description
 
