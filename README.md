@@ -40,7 +40,9 @@ To run the myFlix client locally, follow these steps:
     npm start
     ```
 
-The app will be accessible at `http://localhost:1234` in your web browser.
+5. The app will be accessible at `http://localhost:1234` in your web browser.
+
+You can also access the live app on https://retro-movie-vault.netlify.app/.
 
 ## Project Dependencies
 
@@ -49,15 +51,6 @@ The app will be accessible at `http://localhost:1234` in your web browser.
 - Redux
 - Parcel
 
-## Usage
-
-1. Open your browser and go to `http://localhost:1234/`.
-2. Sign up or log in to access the main features of the myFlix client.
-3. Explore movies, view details, and add your favorites to the list.
-4. Update your profile settings to personalize your experience.
-
-You can also access the live app on https://retro-movie-vault.netlify.app/.
- 
 ## API Used
 
 The myFlix client interacts with the [Retro Movie Vault API](https://retro-movie-vault-5ccf6999c998.herokuapp.com), which serves as the backend for managing movie data, user authentication, and profiles.
