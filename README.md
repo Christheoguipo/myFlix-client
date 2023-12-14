@@ -1,8 +1,8 @@
-# MyFlix Client
+# Movie Vault App
 
 ## Project Description
 
-The myFlix client is a dynamic web application that allows users to browse a collection of movies, manage their profiles, and create a personalized list of favorite movies.
+The Movie Vault App is a dynamic web application that allows users to browse a collection of movies, manage their profiles, and create a personalized list of favorite movies.
 
 ## Features
 
@@ -21,7 +21,7 @@ The myFlix client is a dynamic web application that allows users to browse a col
 
 ## Installation
 
-To run the myFlix client locally, follow these steps:
+To run the Movie Vault App locally, follow these steps:
 
 1. Clone the repository:
 
@@ -53,4 +53,4 @@ You can also access the live app on https://retro-movie-vault.netlify.app/.
 
 ## API Used
 
-The myFlix client interacts with the [Retro Movie Vault API](https://retro-movie-vault-5ccf6999c998.herokuapp.com), which serves as the backend for managing movie data, user authentication, and profiles.
+The Movie Vault App interacts with the [Retro Movie Vault API](https://retro-movie-vault-5ccf6999c998.herokuapp.com), which serves as the backend for managing movie data, user authentication, and profiles.
