@@ -22,6 +22,11 @@ export const MainView = () => {
   // const users = useSelector((state) => state.users);
 
   useEffect(() => {
+    document.title = 'Movie Vault';
+  }, []);
+
+
+  useEffect(() => {
     if (!token) {
       return;
     }
